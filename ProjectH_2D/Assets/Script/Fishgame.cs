@@ -19,10 +19,8 @@ public class Fishgame : MonoBehaviour
 
         public GameObject Startfishgame;
         public GameObject pointFishbar;
-        public GameObject zonefishing;
         public float timetillcatch = 0.0f;
         public bool winneranim;
-        public bool inzone;
         Vector3 originalPos;
 
         // Start is called before the first frame update
@@ -42,11 +40,7 @@ public class Fishgame : MonoBehaviour
         // Update is called once per frame
         void Update()
         {
-          if(GameObject.FindGameObjectWithTag("zonef"))
-          {
-            
-            inzone = true;
-                
+            //GameObject.FindGameObjectWithTag("fish");
             if(Input.GetKeyDown(KeyCode.Space) && isfishing == false && winneranim == false)
             {
                 
@@ -148,7 +142,6 @@ public class Fishgame : MonoBehaviour
                 timetillcatch = 0;
                 //pointFishbar.transform.position = originalPos;
             }
-          }
         }
 
         public void fishGameWon()

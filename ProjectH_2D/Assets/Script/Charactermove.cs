@@ -5,6 +5,7 @@ using UnityEngine;
 public class Charactermove : MonoBehaviour
 {
     public float moveSpeed;
+    
     public Rigidbody2D rb;
     public Animator animator;
 
