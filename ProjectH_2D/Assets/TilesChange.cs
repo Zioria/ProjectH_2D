@@ -5,6 +5,17 @@ using UnityEngine.Tilemaps;
 
 public class TilesChange : MonoBehaviour
 {
+    public InventoryManager inventoryManager;
+    public float maxDistance = 0f;
+    public Transform Player;
+    public Vector3Int targetCellPosition;
+
+
+    [Header("Key_Item")]
+    public Item KeyItem_Hoe;
+    public Item KeyItem_Watering;
+    [Space]
+
     public Tilemap tilemap;            // Reference to the tilemap
     public TileLibrary tileLibrary;    // Reference to the TileLibrary
 
@@ -25,20 +36,60 @@ public class TilesChange : MonoBehaviour
 
     void Update()
     {
+        Vector3 playerPos = Player.position;                  // Get the player's position in world coordinates
+        Vector3Int playerCell = tilemap.WorldToCell(playerPos);        // Convert player position to a grid cell
+
+        // Loop over a small area around the player to find nearby tiles
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                Vector3Int cellPosition = playerCell + new Vector3Int(x, y, 0); // Get each cell around the player
+
+                // Convert cell position to world position
+                Vector3 cellWorldPos = tilemap.CellToWorld(cellPosition);
+
+                // Calculate the distance between the player and the cell
+                float distance = Vector3.Distance(playerPos, cellWorldPos);
+
+                // Check if the distance is within maxDistance
+                if (distance <= maxDistance)
+                {
+                    Debug.Log("Tile within range at position " + cellPosition + " with distance: " + distance);
+                }
+            }
+        }
+
+
         if (Input.GetMouseButtonDown(0))  // Detect left mouse button click
         {
+            Item receivedItem = inventoryManager.GetSelcetedItem();
+            
+
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);  // Get world position of mouse click
             Vector3Int clickedCell = tilemap.WorldToCell(mouseWorldPos);  // Convert to grid cell position
 
             TileBase currentTile = tilemap.GetTile(clickedCell);  // Get the current tile at the clicked position
 
+            // Check distance from player to clicked tile
+            
+
+            if (receivedItem != null)
+            {
+                Debug.Log("Received item: " + receivedItem);
+            }
+            else
+            {
+                Debug.Log("No Item received!");
+            }
+
             // Check if the current tile is the Rule Tile for Type 1
-            if (currentTile == type1RuleTile)
+            if (currentTile == type1RuleTile && receivedItem == KeyItem_Hoe )
             {
                 // Change Type 1 (Rule Tile) to Type 2
                 tilemap.SetTile(clickedCell, type2Tile);
             }
-            else if (currentTile == type2Tile)
+            else if (currentTile == type2Tile && receivedItem == KeyItem_Watering)
             {
                 // Change Type 2 to Type 3
                 tilemap.SetTile(clickedCell, type3Tile);
@@ -46,7 +97,7 @@ public class TilesChange : MonoBehaviour
             else if (currentTile == type3Tile)
             {
                 // Change Type 3 back to Type 1 (Rule Tile)
-                tilemap.SetTile(clickedCell, type1RuleTile);
+                //tilemap.SetTile(clickedCell, type1RuleTile);
             }
         }
     }

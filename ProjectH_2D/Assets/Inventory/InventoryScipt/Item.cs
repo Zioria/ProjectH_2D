@@ -28,5 +28,6 @@ public enum ItemType
 public enum ActionType
 {
     Dig,
-    Mine
+    Mine,
+    Water_Tool
 }
