@@ -7,8 +7,7 @@ public class TileChanger : MonoBehaviour
 {
     public InventoryManager inventoryManager;
     public float maxDistance = 5f;  // Maximum range for tile changes
-    public Transform player;
-     private Vector3Int playerCellPosition;
+    public Transform player;  // Reference to the player
 
     [Header("Key_Item")]
     public Item KeyItem_Hoe;  // Reference to the hoe item
@@ -22,6 +21,8 @@ public class TileChanger : MonoBehaviour
     private TileBase type2Tile;  // Type 2 tile (e.g., tilled soil)
     private TileBase type3Tile;  // Type 3 tile (e.g., watered soil)
 
+    private Camera mainCamera;  // Reference to the camera
+
     void Start()
     {
         // Ensure that the Tile Library is correctly set up
@@ -30,33 +31,34 @@ public class TileChanger : MonoBehaviour
         // Assume the first two tiles in the TileLibrary are Type 2 (tilled) and Type 3 (watered)
         type2Tile = tileLibrary.tiles[0];  // Type 2 - Tilled Soil
         type3Tile = tileLibrary.tiles[1];  // Type 3 - Watered Soil
+
+        mainCamera = Camera.main;  // Get the main camera
     }
 
     void Update()
     {
-        // Convert the player's world position to tilemap cell position
-        Vector3 playerPos = player.position;
-        playerCellPosition = tilemap.WorldToCell(playerPos);
-
+        // Perform raycast when left mouse button is clicked
         if (Input.GetMouseButtonDown(0))  // Left click to use tools
         {
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3Int clickedCell = tilemap.WorldToCell(mouseWorldPos);
+            // Cast a ray from the camera to the mouse position
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
 
-            // Get the selected item from the inventory
-            Item receivedItem = inventoryManager.GetSelcetedItem();
-
-            // Check if the clicked tile is in range (maxDistance)
-            float distance = Vector3.Distance(player.position, tilemap.CellToWorld(clickedCell));
-            if (distance <= maxDistance)
+            if (hit.collider != null)
             {
+                // Check if the ray hit the tilemap (ensure it has a TilemapCollider2D)
+                if (hit.collider.gameObject.CompareTag("Tilemap"))  // Ensure it hits the Tilemap
+                {
+                    Vector3 worldPosition = hit.point;  // World position of the raycast hit
+                    Vector3Int clickedCell = tilemap.WorldToCell(worldPosition);  // Convert to grid cell
 
-                
-                HandleToolUsage(clickedCell, receivedItem);
+                    // Get the selected item from inventory
+                    Item receivedItem = inventoryManager.GetSelcetedItem();
 
+                    HandleToolUsage(clickedCell, receivedItem);
+                }
             }
         }
-
     }
 
     private void HandleToolUsage(Vector3Int clickedCell, Item receivedItem)
@@ -76,7 +78,6 @@ public class TileChanger : MonoBehaviour
             tilemap.SetTile(clickedCell, type3Tile);
             Debug.Log("Soil watered.");
         }
-
     }
 
     // Method to check if the Tile Library is correctly set up
