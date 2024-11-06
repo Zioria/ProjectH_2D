@@ -15,7 +15,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
    [HideInInspector] public Item item;
    
 
-    private void InitialiseItem(Item newItem)
+    public void InitialiseItem(Item newItem)
     {
         item = newItem;
         image.sprite = newItem.image;
