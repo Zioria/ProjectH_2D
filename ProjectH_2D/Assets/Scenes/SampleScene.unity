@@ -391,9 +391,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryManager: {fileID: 1167753891}
-  maxDistance: 1.5
-  Player: {fileID: 1915562170}
-  targetCellPosition: {x: 0, y: 0, z: 0}
+  maxDistance: 1
+  player: {fileID: 1915562170}
   KeyItem_Hoe: {fileID: 11400000, guid: 15d0c00b0696c7643aa957d3fcd694a8, type: 2}
   KeyItem_Watering: {fileID: 11400000, guid: 2f6e43b4f848195458f49e90797b452a, type: 2}
   tilemap: {fileID: 1411665917}
