@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:ProjectH_2D/Assets/Script.meta
-guid: 57f5ac510bce946419b9d0f4849f599c
-========
-guid: 9f359cac9306bc94c8c1fec54d2c916b
->>>>>>>> b50cc00833ed1e1a07e8a4b7004b86b74ac72999:ProjectH_2D/Assets/Item.meta
+guid: 1a8d393dd403e4d4e9823a8d57897dcb
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
