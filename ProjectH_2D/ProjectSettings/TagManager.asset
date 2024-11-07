@@ -4,8 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - fish
   - zonef
+=======
+  - Tilemap
+>>>>>>> parent of ecbb4d8 (Revert "Merge branch 'P'")
   layers:
   - Default
   - TransparentFX
