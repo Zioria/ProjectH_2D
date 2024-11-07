@@ -52,7 +52,7 @@ public class TileChanger : MonoBehaviour
                     Vector3 worldPosition = hit.point;  // World position of the raycast hit
                     Vector3Int clickedCell = tilemap.WorldToCell(worldPosition);  // Convert to grid cell
 
-                    // Get the selected item from inventory
+                    // Get the selected item from inventory^
                     Item receivedItem = inventoryManager.GetSelcetedItem();
 
                     HandleToolUsage(clickedCell, receivedItem);
@@ -66,7 +66,7 @@ public class TileChanger : MonoBehaviour
         // Get the current tile at the clicked position
         TileBase currentTile = tilemap.GetTile(clickedCell);
 
-        if (receivedItem == KeyItem_Hoe && currentTile == type1RuleTile)  // If Hoe is used on empty ground
+        if (receivedItem == KeyItem_Hoe && currentTile == type1RuleTile)  // If Hoe is used on empty ground&
         {
             // Change to tilled soil
             tilemap.SetTile(clickedCell, type2Tile);
