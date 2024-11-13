@@ -46,7 +46,7 @@ public class FishingBar : MonoBehaviour
                         
                         rb.AddForce(Vector3.zero, ForceMode.Impulse);
                         rb.AddForce(Vector3.down, ForceMode.Impulse);
-                        transform.localPosition = new Vector3(-3.989f,-2.0877745f,4.42f);
+                        transform.localPosition = new Vector3(-8.581f,-0.4053744f,4.42f);
                         Destroy(GameObject.Find("Fish point(Clone)"));
                         Destroy(GameObject.Find("Bobber(Clone)"));
                         playerS.fishGameWon();
@@ -63,7 +63,7 @@ public class FishingBar : MonoBehaviour
                 {   
                     rb.AddForce(Vector3.down, ForceMode.Impulse);
                     rb.AddForce(Vector3.zero, ForceMode.Impulse);
-                    transform.localPosition = new Vector3(-3.989f,-2.0877745f,4.42f);
+                    transform.localPosition = new Vector3(-8.581f,-0.4053744f,4.42f);
                     Destroy(GameObject.Find("Fish point(Clone)"));
                     Destroy(GameObject.Find("Bobber(Clone)"));
                     playerS.fishGameLossed();
@@ -75,7 +75,7 @@ public class FishingBar : MonoBehaviour
             {   
                 rb.AddForce(Vector3.down, ForceMode.Impulse);
                 rb.AddForce(Vector3.zero, ForceMode.Impulse); 
-                transform.localPosition = new Vector3(-3.989f,-2.0877745f,4.42f);
+                transform.localPosition = new Vector3(-8.581f,-0.4053744f,4.42f);
                 onFish = false;
                 playerS.fishGameLossed();
                 Destroy(GameObject.Find("Bobber(Clone)"));
