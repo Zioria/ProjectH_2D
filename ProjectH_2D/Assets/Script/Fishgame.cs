@@ -34,7 +34,7 @@ public class Fishgame : MonoBehaviour
             targetTime = 0.0f;
             savetargettime = 0.0f;
             extrabobberdistance = 0.0f;
-            originalPos = new Vector3(-3.989f,-2.0877745f,4.42f);
+            originalPos = new Vector3(-8.581f,-0.4053744f,4.42f);
             
    
         }
