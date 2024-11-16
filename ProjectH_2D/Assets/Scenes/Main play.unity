@@ -906,7 +906,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &175610158
 Transform:
   m_ObjectHideFlags: 0
@@ -1201,6 +1201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 255193246}
   - component: {fileID: 255193247}
+  - component: {fileID: 255193248}
   m_Layer: 0
   m_Name: Pole
   m_TagString: Untagged
@@ -1275,6 +1276,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!65 &255193248
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255193245}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.039034873, y: 2.3006988, z: 0.20000002}
+  m_Center: {x: 0.48052707, y: 0.12948884, z: -0.000000014901161}
 --- !u!1 &258970305
 GameObject:
   m_ObjectHideFlags: 0
