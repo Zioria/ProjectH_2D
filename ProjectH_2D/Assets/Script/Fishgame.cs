@@ -25,6 +25,9 @@ public class Fishgame : MonoBehaviour
         public bool inzone;
         Vector3 originalPos;
 
+        public InventoryManager inventoryManager;
+        public Item[] itemDrop;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -160,6 +163,9 @@ public class Fishgame : MonoBehaviour
             throwbobber = false;
             isfishing = false;
             timetillcatch = 0;
+            Drop(0);
+            //Item receivedItem = inventoryManager.GetSelcetedItem(itemDrop);
+            
         }
 
         public void fishGameLossed()
@@ -173,4 +179,18 @@ public class Fishgame : MonoBehaviour
             timetillcatch = 0;
             
         } 
+
+
+        void Drop(int id)
+        {
+            bool result = inventoryManager.addItem(itemDrop[id]);
+            if(result == true)
+            {
+                Debug.Log("Item added");
+            }
+            else
+            {
+                Debug.Log("ITEM IS NOT ADDED");
+            }
+        }
 }

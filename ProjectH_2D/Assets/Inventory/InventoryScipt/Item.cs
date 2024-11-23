@@ -22,12 +22,14 @@ public class Item : ScriptableObject
 
 public enum ItemType
 {
-    Tool
+    Tool,
+    food
 }
 
 public enum ActionType
 {
     Dig,
     Mine,
-    Water_Tool
+    Water_Tool,
+    Water_fish
 }
