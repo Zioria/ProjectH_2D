@@ -8,6 +8,9 @@ public class TileChanger : MonoBehaviour
     public InventoryManager inventoryManager;
     public float maxDistance = 5f;  // Maximum range for tile changes
     public Transform player;  // Reference to the player
+    public float movementSpeed = 3f;  // Player movement speed
+    private Vector3 targetPosition;  // Target position for the player
+    private bool isMoving = false;  // Is the player currently moving?
 
     [Header("Key_Item")]
     public Item KeyItem_Hoe;  // Reference to the hoe item
@@ -22,13 +25,12 @@ public class TileChanger : MonoBehaviour
     private TileBase type3Tile;  // Type 3 tile (e.g., watered soil)
 
     private Camera mainCamera;  // Reference to the camera
+    private Vector3Int targetCell;  // Target cell for the tile change
 
     void Start()
     {
-        // Ensure that the Tile Library is correctly set up
         CheckTileLibrary();
 
-        // Assume the first two tiles in the TileLibrary are Type 2 (tilled) and Type 3 (watered)
         type2Tile = tileLibrary.tiles[0];  // Type 2 - Tilled Soil
         type3Tile = tileLibrary.tiles[1];  // Type 3 - Watered Soil
 
@@ -37,50 +39,70 @@ public class TileChanger : MonoBehaviour
 
     void Update()
     {
-        // Perform raycast when left mouse button is clicked
-        if (Input.GetMouseButtonDown(0))  // Left click to use tools
+        if (Input.GetMouseButtonDown(0))  // Left click
         {
-            // Cast a ray from the camera to the mouse position
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
 
-            if (hit.collider != null)
+            if (hit.collider != null && hit.collider.gameObject.CompareTag("Tilemap"))
             {
-                // Check if the ray hit the tilemap (ensure it has a TilemapCollider2D)
-                if (hit.collider.gameObject.CompareTag("Tilemap"))  // Ensure it hits the Tilemap
+                Vector3 worldPosition = hit.point;
+                targetCell = tilemap.WorldToCell(worldPosition);
+                targetPosition = tilemap.GetCellCenterWorld(targetCell);  // Center of the clicked tile
+
+                // Get the selected item
+                Item receivedItem = inventoryManager.GetSelcetedItem();
+                TileBase currentTile = tilemap.GetTile(targetCell);
+
+                // Check if the tool matches the action
+                if ((receivedItem == KeyItem_Hoe && currentTile == type1RuleTile) ||
+                    (receivedItem == KeyItem_Watering && currentTile == type2Tile))
                 {
-                    Vector3 worldPosition = hit.point;  // World position of the raycast hit
-                    Vector3Int clickedCell = tilemap.WorldToCell(worldPosition);  // Convert to grid cell
-
-                    // Get the selected item from inventory^
-                    Item receivedItem = inventoryManager.GetSelcetedItem();
-
-                    HandleToolUsage(clickedCell, receivedItem);
+                    isMoving = true;  // Start moving the player
+                }
+                else
+                {
+                    Debug.Log("Invalid tool selected. Player will not move.");
                 }
             }
         }
+
+        if (isMoving)
+        {
+                MovePlayer();
+        }
     }
 
-    private void HandleToolUsage(Vector3Int clickedCell, Item receivedItem)
+    private void MovePlayer()
     {
-        // Get the current tile at the clicked position
-        TileBase currentTile = tilemap.GetTile(clickedCell);
+        float step = movementSpeed * Time.deltaTime;
+        player.position = Vector3.MoveTowards(player.position, targetPosition, step);
 
-        if (receivedItem == KeyItem_Hoe && currentTile == type1RuleTile)  // If Hoe is used on empty ground^
+
+        if (Vector3.Distance(player.position, targetPosition) < 0.1f)
         {
-            // Change to tilled soil
-            tilemap.SetTile(clickedCell, type2Tile);
+            isMoving = false;  // Stop moving
+            ChangeTile();
+        }
+    }
+
+    private void ChangeTile()
+    {
+        TileBase currentTile = tilemap.GetTile(targetCell);
+        Item receivedItem = inventoryManager.GetSelcetedItem();
+
+        if (receivedItem == KeyItem_Hoe && currentTile == type1RuleTile)
+        {
+            tilemap.SetTile(targetCell, type2Tile);
             Debug.Log("Soil tilled.");
         }
-        else if (receivedItem == KeyItem_Watering && currentTile == type2Tile)  // Water the crops
+        else if (receivedItem == KeyItem_Watering && currentTile == type2Tile)
         {
-            // Change tilled soil to watered soil (you could implement a crop system here)
-            tilemap.SetTile(clickedCell, type3Tile);
+            tilemap.SetTile(targetCell, type3Tile);
             Debug.Log("Soil watered.");
         }
     }
 
-    // Method to check if the Tile Library is correctly set up
     void CheckTileLibrary()
     {
         if (tileLibrary == null)
