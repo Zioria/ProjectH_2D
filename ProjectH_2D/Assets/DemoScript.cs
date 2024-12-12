@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DemoScript : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class DemoScript : MonoBehaviour
         if(result == true)
         {
             Debug.Log("Item added");
+            StartCoroutine(UnselectAfterDelay(0.1f)); 
         }
         else
         {
@@ -46,5 +48,11 @@ public class DemoScript : MonoBehaviour
         {
             Debug.Log("No Item used!");
         }
+    }
+
+    private IEnumerator UnselectAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        EventSystem.current.SetSelectedGameObject(null);
     }
 }
