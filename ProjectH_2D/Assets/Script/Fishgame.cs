@@ -27,7 +27,7 @@ public class Fishgame : MonoBehaviour
 
         public InventoryManager inventoryManager;
         public Item[] itemDrop;
-
+        public Item toolfish;
         // Start is called before the first frame update
         void Start()
         {
@@ -45,11 +45,12 @@ public class Fishgame : MonoBehaviour
         // Update is called once per frame
         void Update()
         {
-          if(GameObject.FindGameObjectWithTag("zonef"))
+          if(inzone == true)
           {
-            
-            inzone = true;
-                
+           // Item receivedItem = inventoryManager.GetSelcetedItem();
+          //  if (receivedItem = toolfish)
+           // {
+             Debug.Log("Can fishing");
             if(Input.GetKeyDown(KeyCode.Space) && isfishing == false && winneranim == false)
             {
                 
@@ -77,15 +78,6 @@ public class Fishgame : MonoBehaviour
                 }
 
             }
-            //if(isfishing == true)
-           // {
-             //   timetillcatch += Time.deltaTime;
-              //  if(timetillcatch >= 2)
-              //  {
-                //    Startfishgame.SetActive(true);
-               
-              // }
-           // }
 
            
 
@@ -151,6 +143,13 @@ public class Fishgame : MonoBehaviour
                 timetillcatch = 0;
                 //pointFishbar.transform.position = originalPos;
             }
+            
+            
+          }
+
+          if(inzone == false)
+          {
+                Debug.Log("Can't fishing");
           }
         }
 
@@ -192,5 +191,23 @@ public class Fishgame : MonoBehaviour
             {
                 Debug.Log("ITEM IS NOT ADDED");
             }
+        }
+
+        public void OnTriggerEnter(Collider other)
+        {
+            
+                if(other.gameObject.CompareTag("zonef"))
+                {
+                    inzone = true;
+                }
+                
+        }
+
+        public void OnTriggerExit(Collider other)
+        {
+            if(other.gameObject.CompareTag("zonef"))
+                {
+                    inzone = false;
+                }
         }
 }

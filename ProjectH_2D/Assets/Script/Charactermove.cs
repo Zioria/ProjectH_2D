@@ -6,10 +6,10 @@ public class Charactermove : MonoBehaviour
 {
     public float moveSpeed;
     
-    public Rigidbody2D rb;
+    public Rigidbody rb;
     public Animator animator;
 
-    Vector2 movement;
+    Vector3 movement;
 
     // Update is called once per frame
     void Update()
