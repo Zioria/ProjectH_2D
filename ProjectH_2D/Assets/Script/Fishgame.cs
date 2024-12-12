@@ -47,11 +47,11 @@ public class Fishgame : MonoBehaviour
         {
           if(inzone == true)
           {
-           // Item receivedItem = inventoryManager.GetSelcetedItem();
+            Item receivedItem = inventoryManager.GetSelcetedItem();
           //  if (receivedItem = toolfish)
            // {
              Debug.Log("Can fishing");
-            if(Input.GetKeyDown(KeyCode.Space) && isfishing == false && winneranim == false)
+            if(Input.GetKeyDown(KeyCode.Space) && isfishing == false && winneranim == false && receivedItem == toolfish)
             {
                 
                 poleback = true;
@@ -81,7 +81,7 @@ public class Fishgame : MonoBehaviour
 
            
 
-            if(Input.GetKeyUp(KeyCode.Space) && isfishing == false && winneranim == false)
+            if(Input.GetKeyUp(KeyCode.Space) && isfishing == false && winneranim == false && receivedItem == toolfish)
             {
                 poleback = false;
                 isfishing = true;
